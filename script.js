@@ -32,6 +32,7 @@ function startGame() {
             if (playerHand === "r") {
             result = "Tie! Opponent also chose Rock.";
             ties++;
+            roundsPlayed--;
             } else if (playerHand === "p") {
             result = "You win! Opponent chose Rock and you chose Paper.";
             playerWins++;
@@ -47,6 +48,7 @@ function startGame() {
             } else if (playerHand === "p") {
             result = "Tie! Opponent also chose Paper.";
             ties++;
+            roundsPlayed--;
             } else if (playerHand === "s") {
             result = "You win! Opponent chose Paper and you chose Scissors.";
             playerWins++;
@@ -62,6 +64,7 @@ function startGame() {
             } else if (playerHand === "s") {
             result = "Tie! Opponent also chose Scissors.";
             ties++;
+            roundsPlayed--;
             }
             break;
         default:
