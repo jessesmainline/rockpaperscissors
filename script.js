@@ -24,7 +24,10 @@ function startGame() {
     // Determine winner, loser, or tie based on arguments from prompt (playerHand) and program (compHand).
     function playRound() {
     let playerHand = getPlayer();
-    if (playerHand !== null) {
+    if (playerHand !== "r" && playerHand !== "p" && playerHand !== "s") {
+        confirm("Type Rock, Paper, or Scissors.");
+    }
+    else if (playerHand !== null) {
         let compHand = getComputerChoice();
         let result = "";
         switch (compHand) {
