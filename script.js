@@ -6,12 +6,14 @@ function startGame() {
     let ties = 0;
     let roundsPlayed = 0;
 
-    //Prompt player choice.
+
+    //Prompt player choice with keyboard.
     function getPlayer() {
     let playerHand = prompt("Choose your hand by typing either Rock, Paper, or Scissors!");
     playerHand = playerHand ? playerHand.toLowerCase().charAt(0) : null;
     return playerHand;
     }
+
 
     // Randomly generate the number 1, 2, or 3 to represent opponent's hand. 
     function getComputerChoice() {

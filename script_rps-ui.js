@@ -3,9 +3,11 @@ var playerWins = 0;
 var computerWins = 0;
 
 // Event listeners for rock, paper, or scissors button press
-const button = document.querySelectorAll('.choiceButton');
-button.forEach((choiceButton) => {
-button.addEventListener('click', (playGame(button.id)));
+const buttons = document.querySelectorAll('.choiceButton');
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    playGame(button.id);
+  });
 });
 
 // Function to handle player's choice and initiate game
@@ -41,6 +43,24 @@ function playGame(playerChoice) {
     var score = document.getElementById("score");
     score.innerHTML = "Player: " + playerWins + " | Computer: " + computerWins;
 
+    // Function to update the scoreboard
+    function updateScoreboard() {
+        document.getElementById("playerScore").textContent = `Player Wins: ${playerWins}`;
+        document.getElementById("computerScore").textContent = `Computer Wins: ${computerWins}`;
+        document.getElementById("ties").textContent = `Ties: ${ties}`;
+    }
+    
+    // Function to announce the winner
+    function announceWinner() {
+        // ...
+    
+        // Update the scoreboard
+        updateScoreboard();
+    
+        // ...
+    }
+  
+
     // Check if the game is over (five rounds)
     if (gameResult.getElementsByTagName("li").length === 5) {
         var buttons = document.getElementsByClassName("choiceButton");
@@ -65,10 +85,10 @@ function animateChoices(playerChoice, computerChoice) {
     setTimeout(function() {
         playerAnimation.style.transform = "translate(-50%, -50%) scale(0)";
         computerAnimation.style.transform = "translate(-50%, -50%) scale(0)";
-    }, 100);
+    }, 1000);
 
     setTimeout(function() {
         playerAnimation.style.opacity = 0;
         computerAnimation.style.opacity = 0;
-    }, 600);
+    }, 6000);
 }
