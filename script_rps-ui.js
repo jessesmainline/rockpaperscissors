@@ -2,6 +2,9 @@
 let playerWins = 0;
 let computerWins = 0;
 
+  // Update the score display
+  updateScoreboard();
+
 // Event listeners for rock, paper, or scissors button press
 const buttons = document.querySelectorAll('.choiceButton');
 buttons.forEach((button) => {
