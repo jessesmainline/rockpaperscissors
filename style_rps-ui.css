@@ -1,14 +1,29 @@
+
+@font-face {
+    font-family: "Kult";
+    src: url(fonts/kult-the-temple-of-flying-saucers.ttf);
+  }
+
+
+h1, h2, p {
+    font-family: Kult, Arial, Helvetica, sans-serif;
+
+}
+
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center;
 }
 
 .rps-choices {
     display: flex;
     flex-direction: row;
     display: flex;
-
+    justify-content: center;
+    margin: 2em;
 }
 
 
@@ -17,26 +32,21 @@ body {
     max-width: 200px;
     flex-grow: 1;
     border: none;
+
 }
 
 .choiceButton img {
     max-width: 200px;
     flex-grow: 1;
     border: none;
+    
 }
 
-#playerChoiceAnimation,
-#computerChoiceAnimation {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.5s, transform 0.5s;
+ul {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
 }
 
-#playerChoiceAnimation img,
-#computerChoiceAnimation img {
-    width: 100px;
-    height: 100px;
+#scoreboard {
+    font-family: Arial, Helvetica, sans-serif;
 }

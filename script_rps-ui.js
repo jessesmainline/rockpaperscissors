@@ -1,26 +1,23 @@
 // Initialize the score counters
-var playerWins = 0;
-var computerWins = 0;
+let playerWins = 0;
+let computerWins = 0;
 
 // Event listeners for rock, paper, or scissors button press
 const buttons = document.querySelectorAll('.choiceButton');
 buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    playGame(button.id);
-  });
+    button.addEventListener('click', () => {
+        playGame(button.id);
+    });
 });
 
 // Function to handle player's choice and initiate game
 function playGame(playerChoice) {
     // Generate computer's choice
-    var choices = ["rock", "paper", "scissors"];
-    var computerChoice = choices[Math.floor(Math.random() * choices.length)];
-
-    // Animate player and computer choices
-    animateChoices(playerChoice, computerChoice);
+    const choices = ["rock", "paper", "scissors"];
+    const computerChoice = choices[Math.floor(Math.random() * choices.length)];
 
     // Determine the winner
-    var result;
+    let result;
     if (playerChoice === computerChoice) {
         result = "It's a tie!";
     } else if (
@@ -36,59 +33,26 @@ function playGame(playerChoice) {
     }
 
     // Update the result display
-    var gameResult = document.getElementById("gameResult");
-    gameResult.innerHTML += "<li>You chose <strong>" + playerChoice + "</strong>. Computer chose <strong>" + computerChoice + "</strong>. " + result + "</li>";
+    const gameResult = document.getElementById("gameResult");
+    gameResult.innerHTML += "<ul>You chose <strong>" + playerChoice + "</strong>. Computer chose <strong>" + computerChoice + "</strong>. " + result + "</ul>";
 
     // Update the score display
-    var score = document.getElementById("score");
+    const score = document.getElementById("scoreboard");
     score.innerHTML = "Player: " + playerWins + " | Computer: " + computerWins;
 
-    // Function to update the scoreboard
-    function updateScoreboard() {
-        document.getElementById("playerScore").textContent = `Player Wins: ${playerWins}`;
-        document.getElementById("computerScore").textContent = `Computer Wins: ${computerWins}`;
-        document.getElementById("ties").textContent = `Ties: ${ties}`;
-    }
-    
-    // Function to announce the winner
-    function announceWinner() {
-        // ...
-    
-        // Update the scoreboard
-        updateScoreboard();
-    
-        // ...
-    }
-  
-
     // Check if the game is over (five rounds)
-    if (gameResult.getElementsByTagName("li").length === 5) {
-        var buttons = document.getElementsByClassName("choiceButton");
-        for (var i = 0; i < buttons.length; i++) {
-            buttons[i].disabled = true; // Disable the buttons after five rounds
-        }
-        gameResult.innerHTML += "<li><strong>Game Over!</strong></li>";
+    if (playerWins === 5 || computerWins === 5) {
+        // Update the final score display
+        const score = document.getElementById("scoreboard");
+        score.innerHTML = "Player: " + playerWins + " | Computer: " + computerWins;
+        // Reset the score counters
+        playerWins = 0;
+        computerWins = 0;
+        // Enable the buttons
+        buttons.forEach((button) => {
+            button.disabled = false;
+        });
+        // Clear the result display
+        gameResult.innerHTML = "";
     }
-}
-
-// Function to animate player and computer choices
-function animateChoices(playerChoice, computerChoice) {
-    var playerAnimation = document.getElementById("playerChoiceAnimation");
-    var computerAnimation = document.getElementById("computerChoiceAnimation");
-
-    playerAnimation.innerHTML = "<img src='" + playerChoice + ".png' alt='" + playerChoice + "'>";
-    computerAnimation.innerHTML = "<img src='" + computerChoice + ".png' alt='" + computerChoice + "'>";
-
-    playerAnimation.style.opacity = 1;
-    computerAnimation.style.opacity = 1;
-
-    setTimeout(function() {
-        playerAnimation.style.transform = "translate(-50%, -50%) scale(0)";
-        computerAnimation.style.transform = "translate(-50%, -50%) scale(0)";
-    }, 1000);
-
-    setTimeout(function() {
-        playerAnimation.style.opacity = 0;
-        computerAnimation.style.opacity = 0;
-    }, 6000);
 }
