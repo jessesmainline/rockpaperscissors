@@ -8,27 +8,39 @@
 </head>
 <body>
     <h1>Rock Paper Scissors</h1>
-    <p>Click on one of the buttons below to make your choice:</p>
+    <p>Click the buttons below to play 5 rounds:</p>
     <div class="rps-choices">
-        <button class="choiceButton" id="rock">
-            <img src="images/rock/rock.png" alt="Rock">
+        <button class="choiceButton hvr-grow" id="rock">
+<!--            <img src="images/rock/rock.png" alt="Rock">
+    -->        <img src="images/rock/jesse-rock.png" alt="Rock">
 
         </button>
-        <button class="choiceButton" id="paper">
-            <img src="images/paper/paper.png" alt="Paper">
+        <button class="choiceButton hvr-grow" id="paper">
+<!--            <img src="images/paper/paper.png" alt="Paper">
+    -->        <img src="images/paper/jesse_paper.png" alt="Paper">
 
         </button>
-        <button class="choiceButton" id="scissors">
-            <img src="images/scissors/scissors.png" alt="Scissors">
+        <button class="choiceButton hvr-grow" id="scissors">
+<!--            <img src="images/scissors/scissors.png" alt="Scissors">
+    -->         <img src="images/scissors/jesse_scissors.png" alt="Scissors">        
         </button>
     </div>
+
+<!-- Game Over Pop-up  -->    
+    <div id="popupContainer" class="popup-container">
+        <div class="popup-content">
+          <h3 id="popupMessage">Game Over!</h3>
+          <button id="playAgainButton">Play Again</button>
+        </div>
+      </div>
+      
 
     <!-- Scoreboard section -->
     <div id="scoreboard">
     </div>
 
     <h2>Game Results:</h2>
-    <ul id="gameResult"></ul>
+    <ol id="gameResult"></ol>
    
 </body>
 </html>
