@@ -1,335 +1,148 @@
+// Initialize the score counters
+let playerWins = 0;
+let computerWins = 0;
 
-// Function to start the game
-function startGame() {
-    let playerWins = 0;
-    let computerWins = 0;
-    let ties = 0;
-    let roundsPlayed = 0;
+  // Update the score display
+  updateScoreboard();
 
+// Event listeners for rock, paper, or scissors button press
+const buttons = document.querySelectorAll('.choiceButton');
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    playGame(button.id);
+    console.log(button.id);
+  });
+});
 
-    //Prompt player choice with keyboard.
-    function getPlayer() {
-    let playerHand = prompt("Choose your hand by typing either Rock, Paper, or Scissors!");
-    playerHand = playerHand ? playerHand.toLowerCase().charAt(0) : null;
-    return playerHand;
-    }
+// Function to handle player's choice and initiate game
+function playGame(playerChoice) {
+  // Generate computer's choice
+  const choices = ["rock", "paper", "scissors"];
+  const computerChoice = choices[Math.floor(Math.random() * choices.length)];
 
-
-    // Randomly generate the number 1, 2, or 3 to represent opponent's hand. 
-    function getComputerChoice() {
-    let min = 1;
-    let max = 3;
-    let compHand = Math.floor(Math.random() * (max - min + 1)) + min;
-    return compHand;    
-    }
-
-    // Determine winner, loser, or tie based on arguments from prompt (playerHand) and program (compHand).
-    function playRound() {
-    let playerHand = getPlayer();
-    if (playerHand !== "r" && playerHand !== "p" && playerHand !== "s") {
-        confirm("Type Rock, Paper, or Scissors.");
-    }
-    else if (playerHand !== null) {
-        let compHand = getComputerChoice();
-        let result = "";
-        switch (compHand) {
-        case 1: //rock
-            if (playerHand === "r") {
-            result = "Tie! Opponent also chose Rock.";
-            ties++;
-            roundsPlayed--;
-            } else if (playerHand === "p") {
-            result = "You win! Opponent chose Rock and you chose Paper.";
-            playerWins++;
-            } else if (playerHand === "s") {
-            result = "You lose! Opponent chose Rock and you chose Scissors.";
-            computerWins++;
-            }
-            break;
-        case 2: //paper
-            if (playerHand === "r") {
-            result = "You lose! Opponent chose Paper and you chose Rock.";
-            computerWins++;
-            } else if (playerHand === "p") {
-            result = "Tie! Opponent also chose Paper.";
-            ties++;
-            roundsPlayed--;
-            } else if (playerHand === "s") {
-            result = "You win! Opponent chose Paper and you chose Scissors.";
-            playerWins++;
-            }
-            break;
-        case 3: //scissors
-            if (playerHand === "r") {
-            result = "You win! Opponent chose Scissors and you chose Rock.";
-            playerWins++;
-            } else if (playerHand === "p") {
-            result = "You lose! Opponent chose Scissors and you chose Paper.";
-            computerWins++;
-            } else if (playerHand === "s") {
-            result = "Tie! Opponent also chose Scissors.";
-            ties++;
-            roundsPlayed--;
-            }
-            break;
-        default:
-            result = "Try that again...";
-            break;
-        }
-        roundsPlayed++;
-        alert(result);
-    }
-    }
-
-
-    // Run the game until the player has played 5 times.
-    while (roundsPlayed < 5) {
-    playRound();
-    }
-
-    // Show the results of the game.
-    alert(`Game Over! You won ${playerWins} time(s), lost ${computerWins} time(s), and tied ${ties} time(s).`);
-}
-
-// Add event listener to "Play" button
-document.getElementById("play").addEventListener("click", startGame);
-
-/*
-
-
-//Auto attempt v03
-
-let playerScore = 0;
-let compScore = 0;
-
-// Function to start the game
-function startGame() {
-  // Reset scores to zero
-  playerScore = 0;
-  compScore = 0;
-
-  // Run game 5 times
-  for (let i = 0; i < 5; i++) {
-    let playerHand;
-    let compHand;
-
-    // Prompt player choice
-    playerHand = prompt("Choose your hand by typing either Rock, Paper, or Scissors!");
-
-    // Convert player answer to integer: Rock = 1, Paper = 2, Scissor = 3, for comparison to compHand.
-    switch (playerHand.toLowerCase().charAt(0)) {
-      case "r": //rock
-        playerHand = 1;
-        break;
-      case "p": //paper
-        playerHand = 2;
-        break;
-      case "s": //scissors
-        playerHand = 3;
-        break;
-    }
-
-    // Randomly generate computer choice
-    compHand = Math.floor(Math.random() * 3) + 1;
-
-    // Determine winner, loser, or tie based on player and computer choices
-    if (playerHand === compHand) {
-      alert("Tie! Try again.");
-    } else if (
-      (playerHand === 1 && compHand === 3) ||
-      (playerHand === 2 && compHand === 1) ||
-      (playerHand === 3 && compHand === 2)
-    ) {
-      playerScore++;
-      alert("You win!");
-    } else {
-      compScore++;
-      alert("You lose!");
-    }
-  }
-
-  // Determine final winner
-  if (playerScore > compScore) {
-    alert(`You win ${playerScore} to ${compScore}!`);
-  } else if (compScore > playerScore) {
-    alert(`You lose ${compScore} to ${playerScore}!`);
+  // Determine the winner
+  let result;
+  if (playerChoice === computerChoice) {
+    result = "It's a tie!";
+  } else if (
+    (playerChoice === "rock" && computerChoice === "scissors") ||
+    (playerChoice === "paper" && computerChoice === "rock") ||
+    (playerChoice === "scissors" && computerChoice === "paper")
+  ) {
+    result = "You win!";
+    playerWins++;
   } else {
-    alert(`Tie game with a score of ${playerScore} to ${compScore}!`);
+    result = "Computer wins!";
+    computerWins++;
+  }
+
+  // Update the result display
+  const gameResult = document.getElementById("gameResult");
+  gameResult.innerHTML += "<li>You chose <strong>" + playerChoice + "</strong>. Computer chose <strong>" + computerChoice + "</strong>. " + result + "</li>";
+
+  // Update the score display
+  updateScoreboard();
+
+  // Check for game over condition
+  if (playerWins === 5 || computerWins === 5) {
+    // Display the game result
+    let gameResultMessage;
+    if (playerWins === 5) {
+      gameResultMessage = "Congratulations! You win the game!";
+    } else {
+      gameResultMessage = "Computer wins the game!";
+    }
+
+    // Show the pop-up
+    showGameResult(gameResultMessage);
   }
 }
 
-// Add event listener to "Play" button
-document.getElementById("play").addEventListener("click", startGame);
-
-
-
-//Auto attempt v02
-let playerHand;
-let compHand;
-
-function getPlayer() {
-    playerHand = prompt("Choose your hand by typing either Rock, Paper, or Scissors!");
-    console.log(playerHand);
-    playerHand = playerHand.toLowerCase();
-    console.log(playerHand);
-
-    switch (playerHand) {
-        case "rock":
-            playerHand = 1;
-            break;
-        case "paper":
-            playerHand = 2;
-            break;
-        case "scissors":
-            playerHand = 3;
-            break;
-        default:
-            alert("Invalid input. Try again.");
-            getPlayer();
-            break;
-    }
-    console.log(playerHand);
+// Function to update the scoreboard
+function updateScoreboard() {
+  const score = document.getElementById("scoreboard");
+  score.innerHTML = "Player: " + playerWins + " | Computer: " + computerWins;
 }
 
-function getComputerChoice() {
-    let min = 1;
-    let max = 3;
+// Function to show the pop-up with game result
+function showGameResult(message) {
+  const popupContainer = document.getElementById("popupContainer");
+  const popupMessage = document.getElementById("popupMessage");
 
-    compHand = Math.floor(Math.random() * (max - min + 1)) + min;
-    return compHand;
+  // Update the pop-up message
+  popupMessage.textContent = message;
+
+  // Show the pop-up
+  popupContainer.style.display = "block";
+
+  // Disable the buttons for a new game
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
 }
 
-function playGame() {
-    getPlayer();
-    getComputerChoice();
-    console.log(playerHand);
-    console.log(compHand);
+// Function to handle the "Play Again" button click
+function playAgain() {
+  // Hide the pop-up
+  const popupContainer = document.getElementById("popupContainer");
+  popupContainer.style.display = "none";
 
-    switch (compHand) {
-        case 1:
-            if (playerHand === 1) {
-                alert("You chose rock. Opponent also chose rock. Tie! Try again.");
-            } else if (playerHand === 2) {
-                alert("You chose paper. Opponent chose rock. You lose!");
-            } else if (playerHand === 3) {
-                alert("You chose scissors. Opponent chose rock. You win!");
-            }
-            break;
-        case 2:
-            if (playerHand === 1) {
-                alert("You chose rock. Opponent chose paper. You lose!");
-            } else if (playerHand === 2) {
-                alert("You chose paper. Opponent also chose paper. Tie! Try again.");
-            } else if (playerHand === 3) {
-                alert("You chose scissors. Opponent chose paper. You win!");
-            }
-            break;
-        case 3:
-            if (playerHand === 1) {
-                alert("You chose rock. Opponent chose scissors. You win!");
-            } else if (playerHand === 2) {
-                alert("You chose paper. Opponent chose scissors. You lose!");
-            } else if (playerHand === 3) {
-                alert("You chose scissors. Opponent also chose scissors. Tie! Try again.");
-            }
-            break;
-    }
+  // Reset the game
+  playerWins = 0;
+  computerWins = 0;
+  gameResult.innerHTML = "";
+  updateScoreboard();
+
+  // Enable the buttons for a new game
+  buttons.forEach((button) => {
+    button.disabled = false;
+  });
 }
 
-playGame();
+// Add event listener to "Play Again" button
+document.getElementById("playAgainButton").addEventListener("click", playAgain);
 
 
+// Make the DIV element draggable:
+dragElement(document.getElementById("popupContainer"));
 
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "popupContainer")) {
+    // Where you move the DIV from:
+    document.getElementById(elmnt.id + "popupContainer").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
 
-// Original attempt v01. 
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
 
-//Prompt player decision. Initiate with a click button "Play".
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
 
-let playerHand;
-let compHand;
-
-function getPlayer(playerHand) { //Prompt player choice.
-    playerHand = prompt("Choose your hand by typing either Rock, Paper, or Scissors!" , compHand); //Default "compHand" results in tie hand.
-    console.log(playerHand);
-    playerHand = playerHand.toLowerCase().charAt(0);
-    console.log(playerHand);
-
-    //  Convert player answer to integer: Rock = 1, Paper = 2, Scissor = 3, for comparison to compHand.
-    switch (playerHand) {
-        case "r": //rock
-            playerHand = 1;
-            break;
-        case "p": //paper
-            playerHand = 2;
-            break;
-        case "s": //scissors
-            playerHand = 3;
-            break;
-    }
-    console.log(playerHand);
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
 }
-
-
-// Randomly generate the number 1, 2, or 3 to represent opponent's hand. 
-function getComputerChoice(compHand){
-    let min = 1;
-    let max = 3;
-
-    compHand = Math.floor(Math.random() * (max - min + 1)) + min;
-    return compHand;    
-}
-
-if (playerHand != null) {
-    getComputerChoice();
-    console.log(playerHand);
-    console.log(compHand);
-
-
-    // Determine winner, loser, or tie based on arguments from prompt (playerHand) and program (compHand).
-
-    switch (getComputerChoice) {
-        case 1: //rock
-            if (playerHand === 1) {
-                alert("Opponent also chose rock. Tie! Try again.")
-            }
-            else if (playerHand = 2) {
-                alert("Opponent chose rock. You lose!")
-            }
-            else if (playerHand = 3) {
-                alert("Opponent chose rock. You win!")
-            }
-            else {
-                alert("Try that again...")
-            }
-
-        case 2:  //paper
-            if (playerHand = 1) {
-                alert("Opponent chose paper. You lose!")
-            }
-            else if (playerHand = 2) {
-                alert("Opponent also chose paper. Tie! Try again.")
-            }
-            else if (playerHand = 3) {
-                alert("Opponent chose paper. You win!")
-            }
-            else {
-                alert("Try that again...")
-            }
-
-        
-        case 3: //scissors
-            if (playerHand = 1) {
-                alert("Opponent chose scissors. You win!")
-            }
-            else if (playerHand = 2) {
-                alert("Opponent chose scissors. You lose!")
-            }
-            else if (playerHand = 3) {
-                alert("Opponent also chose Scissors. Tie! Try agian.")
-            }
-            else {
-                alert("Try that again...")
-            }
-    }
-}
-*/
