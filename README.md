@@ -1,7 +1,7 @@
 Rock Paper Scissors
 or RPS, rps.
 
-
+Check it out here: https://jessesmainline.github.io/rockpaperscissors/main.html
 
 A noob's first javascript program for The Odin Project, a 90% milestone of the Foundation's course, meaning I'm almost half-done. Pat on the back.
 
